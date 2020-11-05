@@ -3,7 +3,7 @@ package com.davidhorstman.orders.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name="agents")
+@Table(name = "agents")
 public class Agent {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -11,10 +11,10 @@ public class Agent {
     private String agentname, country, phone, workingarea;
     private double commission;
 
-    public Agent(){}
+    public Agent() {
+    }
 
-    public Agent(long agentcode, String agentname, String country, String phone, String workingarea, double commission) {
-        this.agentcode = agentcode;
+    public Agent(String agentname, String country, String phone, String workingarea, double commission) {
         this.agentname = agentname;
         this.country = country;
         this.phone = phone;
