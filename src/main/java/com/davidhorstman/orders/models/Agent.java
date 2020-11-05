@@ -21,7 +21,7 @@ public class Agent {
     public Agent() {
     }
 
-    public Agent(String agentname, String country, String phone, String workingarea, double commission) {
+    public Agent(String agentname, String workingarea, double commission, String phone, String country) {
         this.agentname = agentname;
         this.country = country;
         this.phone = phone;
@@ -75,5 +75,13 @@ public class Agent {
 
     public void setCommission(double commission) {
         this.commission = commission;
+    }
+
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
     }
 }

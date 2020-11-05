@@ -37,4 +37,12 @@ public class Payment {
     public void setType(String type) {
         this.type = type;
     }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
+    }
 }
