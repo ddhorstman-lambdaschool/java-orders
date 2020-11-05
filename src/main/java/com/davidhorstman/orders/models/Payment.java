@@ -1,6 +1,8 @@
 package com.davidhorstman.orders.models;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "payments")
@@ -9,6 +11,9 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long paymentid;
     private String type;
+
+    @ManyToMany(mappedBy = "payments")
+    private Set<Order> orders = new HashSet<>();
 
     public Payment() {
     }
