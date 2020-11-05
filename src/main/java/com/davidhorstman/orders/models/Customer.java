@@ -21,7 +21,7 @@ public class Customer {
             nullable = false)
     private Agent agent;
 
-    @OneToMany(mappedBy = "customers",
+    @OneToMany(mappedBy = "customer",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private List<Order> orders = new ArrayList<>();

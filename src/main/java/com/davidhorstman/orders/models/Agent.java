@@ -13,7 +13,7 @@ public class Agent {
     private String agentname, country, phone, workingarea;
     private double commission;
 
-    @OneToMany(mappedBy = "agents",
+    @OneToMany(mappedBy = "agent",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private List<Customer> customers = new ArrayList<>();
