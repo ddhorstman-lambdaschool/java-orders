@@ -24,4 +24,9 @@ public class CustomerController {
     public ResponseEntity<?> getCustomerById(@PathVariable long custcode) {
         return new ResponseEntity<>(customerServices.findById(custcode), HttpStatus.OK);
     }
+
+    @GetMapping("/byname/{name}")
+    public ResponseEntity<?> getCustomerByName(@PathVariable String name){
+        return new ResponseEntity<>(customerServices.findByName(name), HttpStatus.OK);
+    }
 }

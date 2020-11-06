@@ -10,4 +10,6 @@ public interface CustomerServices {
     List<Customer> findAll();
 
     Customer findById(long custcode);
+
+    List<Customer> findByName(String name);
 }
