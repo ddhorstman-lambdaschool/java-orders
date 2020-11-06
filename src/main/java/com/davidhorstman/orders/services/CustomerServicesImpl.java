@@ -2,6 +2,7 @@ package com.davidhorstman.orders.services;
 
 import com.davidhorstman.orders.models.Customer;
 import com.davidhorstman.orders.repositories.CustomersRepository;
+import com.davidhorstman.orders.views.CustomerOrderCount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +36,10 @@ public class CustomerServicesImpl implements CustomerServices {
     @Override
     public List<Customer> findByName(String name) {
         return customersRepository.findAllByCustnameContainsIgnoreCase(name);
+    }
+
+    @Override
+    public List<CustomerOrderCount> findAllByOrderCount() {
+        return customersRepository.findAllByOrderCount();
     }
 }

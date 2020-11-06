@@ -29,4 +29,9 @@ public class CustomerController {
     public ResponseEntity<?> getCustomerByName(@PathVariable String name){
         return new ResponseEntity<>(customerServices.findByName(name), HttpStatus.OK);
     }
+
+    @GetMapping("/byordercount")
+    public ResponseEntity<?> getCustomersByOrderCount(){
+        return new ResponseEntity<>(customerServices.findAllByOrderCount(), HttpStatus.OK);
+    }
 }

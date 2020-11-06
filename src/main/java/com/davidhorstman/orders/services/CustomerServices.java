@@ -1,6 +1,7 @@
 package com.davidhorstman.orders.services;
 
 import com.davidhorstman.orders.models.Customer;
+import com.davidhorstman.orders.views.CustomerOrderCount;
 
 import java.util.List;
 
@@ -12,4 +13,6 @@ public interface CustomerServices {
     Customer findById(long custcode);
 
     List<Customer> findByName(String name);
+
+    List<CustomerOrderCount> findAllByOrderCount();
 }
