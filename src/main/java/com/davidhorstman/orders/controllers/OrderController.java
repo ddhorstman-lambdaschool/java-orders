@@ -15,13 +15,14 @@ public class OrderController {
     @Autowired
     OrderServices orderServices;
 
-    @GetMapping(value="/{orderid}", produces = "application/json")
-    public ResponseEntity<?> getOrderById(@PathVariable long orderid){
-        return new ResponseEntity<>(orderServices.findById(orderid),HttpStatus.OK);
+    @GetMapping(value = "/all", produces = "application/json")
+    public ResponseEntity<?> getAllOrders() {
+        return new ResponseEntity<>(orderServices.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping(value="/all", produces = "application/json")
-    public ResponseEntity<?> getAllOrders(){
-        return new ResponseEntity<>(orderServices.findAll(),HttpStatus.OK);
+    @GetMapping(value = "/{orderid}", produces = "application/json")
+    public ResponseEntity<?> getOrderById(@PathVariable long orderid) {
+        return new ResponseEntity<>(orderServices.findById(orderid), HttpStatus.OK);
     }
+
 }

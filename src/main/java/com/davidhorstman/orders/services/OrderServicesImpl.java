@@ -20,14 +20,16 @@ public class OrderServicesImpl implements OrderServices {
     }
 
     @Override
-    public Order findById(long id) {
-        return ordersRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Order number " + id + " not found."));
-    }
-
-    @Override
     public List<Order> findAll() {
         List<Order> list = new ArrayList<>();
         ordersRepository.findAll().iterator().forEachRemaining(list::add);
         return list;
     }
+
+    @Override
+    public Order findById(long orderid) {
+        return ordersRepository.findById(orderid).orElseThrow(() ->
+                new EntityNotFoundException("Order with id " + orderid + " not found."));
+    }
+
 }
