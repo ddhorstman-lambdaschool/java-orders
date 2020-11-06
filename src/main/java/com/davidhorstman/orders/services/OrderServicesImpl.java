@@ -32,4 +32,9 @@ public class OrderServicesImpl implements OrderServices {
                 new EntityNotFoundException("Order with id " + orderid + " not found."));
     }
 
+    @Override
+    public List<Order> findWithAdvanceAmount() {
+        return ordersRepository.findByAdvanceamountGreaterThan(0.0);
+    }
+
 }

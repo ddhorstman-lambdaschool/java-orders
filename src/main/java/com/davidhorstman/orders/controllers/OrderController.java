@@ -25,4 +25,9 @@ public class OrderController {
         return new ResponseEntity<>(orderServices.findById(orderid), HttpStatus.OK);
     }
 
+    @GetMapping(value="/advanceamount", produces = "application/json")
+    public ResponseEntity<?> getOrdersWithAdvanceAmount(){
+        return new ResponseEntity<>(orderServices.findWithAdvanceAmount() ,HttpStatus.OK);
+    }
+
 }

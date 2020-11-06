@@ -9,4 +9,6 @@ public interface OrderServices {
     Order findById(long id);
 
     List<Order> findAll();
+
+    List<Order> findWithAdvanceAmount();
 }
