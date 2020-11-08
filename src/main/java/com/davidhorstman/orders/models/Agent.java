@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "agents")
@@ -86,5 +87,18 @@ public class Agent {
 
     public void setCustomers(List<Customer> customers) {
         this.customers = customers;
+    }
+
+    @Override
+    public String toString() {
+        return "Agent{" +
+                "agentcode=" + agentcode +
+                ", agentname='" + agentname + '\'' +
+                ", country='" + country + '\'' +
+                ", phone='" + phone + '\'' +
+                ", workingarea='" + workingarea + '\'' +
+                ", commission=" + commission +
+                ", customers=" + customers.stream().map(c->"id="+c.getCustcode()).collect(Collectors.toList()) +
+                '}';
     }
 }

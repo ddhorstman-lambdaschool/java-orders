@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "customers")
@@ -149,5 +150,24 @@ public class Customer {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "custcode=" + custcode +
+                ", custname='" + custname + '\'' +
+                ", custcity='" + custcity + '\'' +
+                ", workingarea='" + workingarea + '\'' +
+                ", custcountry='" + custcountry + '\'' +
+                ", grade='" + grade + '\'' +
+                ", phone='" + phone + '\'' +
+                ", openingamt=" + openingamt +
+                ", receiveamt=" + receiveamt +
+                ", paymentamt=" + paymentamt +
+                ", outstandingamt=" + outstandingamt +
+                ", agent_id=" + agent.getAgentcode() +
+                ", orders=" + orders.stream().map(o -> "id=" + o.getOrdnum()).collect(Collectors.toList())+
+                '}';
     }
 }

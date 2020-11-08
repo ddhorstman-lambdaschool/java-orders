@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "orders")
@@ -93,8 +94,8 @@ public class Order {
                 ", ordamount=" + ordamount +
                 ", advanceamount=" + advanceamount +
                 ", orderdescription='" + orderdescription + '\'' +
-                ", customer=" + customer +
-                ", payments=" + payments +
+                ", customer_id=" + customer.getCustcode() +
+                ", payments=" + payments.stream().map(p -> "id=" + p.getPaymentid()).collect(Collectors.toList()) +
                 '}';
     }
 }

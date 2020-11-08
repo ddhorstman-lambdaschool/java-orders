@@ -48,4 +48,12 @@ public class Payment {
     public void setOrders(Set<Order> orders) {
         this.orders = orders;
     }
+
+    @Override
+    public String toString() {
+        return "Payment{" +
+                "paymentid=" + paymentid +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }
