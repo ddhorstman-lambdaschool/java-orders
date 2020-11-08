@@ -85,4 +85,16 @@ public class Order {
     public void setPayments(Set<Payment> payments) {
         this.payments = payments;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "ordnum=" + ordnum +
+                ", ordamount=" + ordamount +
+                ", advanceamount=" + advanceamount +
+                ", orderdescription='" + orderdescription + '\'' +
+                ", customer=" + customer +
+                ", payments=" + payments +
+                '}';
+    }
 }
