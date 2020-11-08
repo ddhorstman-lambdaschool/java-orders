@@ -67,7 +67,7 @@ public class OrderServicesImpl implements OrderServices {
                 )
         );
 
-        return ordersRepository.save(order);
+        return ordersRepository.save(newOrder);
     }
 
     @Override

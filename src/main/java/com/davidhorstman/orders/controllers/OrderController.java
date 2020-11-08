@@ -56,7 +56,7 @@ public class OrderController {
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
     }
 
-    @PutMapping(value="/{orderid}", consumes = "application/json", produces = "application/json")
+    @PutMapping(value="/{orderid}", consumes = "application/json")
     public ResponseEntity<?> replaceOrder(@PathVariable long orderid, @Valid @RequestBody Order order){
         // Add the existing order ID to the new record which will replace it
         order.setOrdnum(orderid);
