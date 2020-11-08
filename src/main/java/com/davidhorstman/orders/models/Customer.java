@@ -1,5 +1,6 @@
 package com.davidhorstman.orders.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -10,6 +11,26 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "customers")
 public class Customer {
+    @Transient
+    @JsonIgnore
+    public boolean hasOpeningamt = false;
+
+    @Transient
+    @JsonIgnore
+    public boolean hasOutstandingamt = false;
+
+    @Transient
+    @JsonIgnore
+    public boolean hasReceiveamt = false;
+
+    @Transient
+    @JsonIgnore
+    public boolean hasPaymentamt = false;
+
+    @Transient
+    @JsonIgnore
+    public boolean hasOrders = false;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long custcode;
@@ -34,7 +55,17 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String custname, String custcity, String workingarea, String custcountry, String grade, double openingamt, double receiveamt, double paymentamt, double outstandingamt, String phone, Agent agent) {
+    public Customer(String custname,
+                    String custcity,
+                    String workingarea,
+                    String custcountry,
+                    String grade,
+                    double openingamt,
+                    double receiveamt,
+                    double paymentamt,
+                    double outstandingamt,
+                    String phone,
+                    Agent agent) {
         this.custname = custname;
         this.custcity = custcity;
         this.workingarea = workingarea;
@@ -42,9 +73,13 @@ public class Customer {
         this.grade = grade;
         this.phone = phone;
         this.openingamt = openingamt;
+        this.hasOpeningamt = true;
         this.receiveamt = receiveamt;
+        this.hasReceiveamt = true;
         this.paymentamt = paymentamt;
+        this.hasPaymentamt = true;
         this.outstandingamt = outstandingamt;
+        this.hasOutstandingamt = true;
         this.agent = agent;
     }
 
@@ -109,6 +144,7 @@ public class Customer {
     }
 
     public void setOpeningamt(double openingamt) {
+        this.hasOpeningamt = true;
         this.openingamt = openingamt;
     }
 
@@ -117,6 +153,7 @@ public class Customer {
     }
 
     public void setReceiveamt(double receiveamt) {
+        this.hasReceiveamt = true;
         this.receiveamt = receiveamt;
     }
 
@@ -125,6 +162,7 @@ public class Customer {
     }
 
     public void setPaymentamt(double paymentamt) {
+        this.hasPaymentamt = true;
         this.paymentamt = paymentamt;
     }
 
@@ -133,6 +171,7 @@ public class Customer {
     }
 
     public void setOutstandingamt(double outstandingamt) {
+        this.hasOutstandingamt = true;
         this.outstandingamt = outstandingamt;
     }
 
@@ -149,6 +188,7 @@ public class Customer {
     }
 
     public void setOrders(List<Order> orders) {
+        this.hasOrders = true;
         this.orders = orders;
     }
 

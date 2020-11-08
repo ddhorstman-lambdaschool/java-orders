@@ -92,7 +92,7 @@ public class CustomerServicesImpl implements CustomerServices {
         newCustomer.setAgent(agentsRepository.findById(agentcode).orElseThrow(
                 () -> new EntityNotFoundException("Error adding agent with id "
                         + agentcode
-                        + " to order: agent not found.")
+                        + " to customer: agent not found.")
         ));
 
         // We need to create the customer before we can create their orders
@@ -109,9 +109,51 @@ public class CustomerServicesImpl implements CustomerServices {
     @Override
     @Transactional
     public Customer update(Customer updatedCustomer, long customerid) {
+
         Customer currentCustomer = customersRepository.findById(customerid).orElseThrow(
-                ()-> new EntityNotFoundException("Could not update customer with id "+customerid+": customer not found.")
+                () -> new EntityNotFoundException("Could not update customer with id " + customerid + ": customer not found.")
         );
+
+        if (updatedCustomer.getCustcity() != null)
+            currentCustomer.setCustcity(updatedCustomer.getCustcity());
+        if (updatedCustomer.getCustname() != null)
+            currentCustomer.setCustname(updatedCustomer.getCustname());
+        if (updatedCustomer.getCustcountry() != null)
+            currentCustomer.setCustcountry(updatedCustomer.getCustcountry());
+        if (updatedCustomer.getWorkingarea() != null)
+            currentCustomer.setWorkingarea(updatedCustomer.getWorkingarea());
+        if (updatedCustomer.getGrade() != null)
+            currentCustomer.setGrade(updatedCustomer.getGrade());
+        if (updatedCustomer.getPhone() != null)
+            currentCustomer.setPhone(updatedCustomer.getPhone());
+        if (updatedCustomer.hasOpeningamt)
+            currentCustomer.setOpeningamt(updatedCustomer.getOpeningamt());
+        if (updatedCustomer.hasOutstandingamt)
+            currentCustomer.setOutstandingamt(updatedCustomer.getOutstandingamt());
+        if (updatedCustomer.hasReceiveamt)
+            currentCustomer.setReceiveamt(updatedCustomer.getReceiveamt());
+        if (updatedCustomer.hasPaymentamt)
+            currentCustomer.setPaymentamt(updatedCustomer.getPaymentamt());
+
+        // Update agent if applicable
+        Agent a = updatedCustomer.getAgent();
+        if (a != null) {
+            Long agentcode = a.getAgentcode();
+            currentCustomer.setAgent(agentsRepository.findById(agentcode).orElseThrow(
+                    () -> new EntityNotFoundException("Error changing to agent with id "
+                            + agentcode
+                            + " for customer: agent not found.")
+            ));
+        }
+
+        // Update order list if applicable
+        if (updatedCustomer.hasOrders) {
+            currentCustomer.getOrders().clear();
+            for (Order o : updatedCustomer.getOrders()) {
+                o.setCustomer(currentCustomer);
+                orderServices.save(o);
+            }
+        }
 
         return customersRepository.save(currentCustomer);
     }
