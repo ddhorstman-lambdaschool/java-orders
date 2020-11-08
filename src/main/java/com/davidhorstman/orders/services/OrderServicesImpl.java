@@ -43,7 +43,20 @@ public class OrderServicesImpl implements OrderServices {
                     )
             );
         }
-        System.out.println(order);
+
+        Customer c = order.getCustomer();
+        if(c == null){
+            throw new EntityNotFoundException("A customer is required to add the order.");
+        }
+        Long custcode = c.getCustcode();
+        newOrder.setCustomer(
+                customersRepository.findById(custcode).orElseThrow(
+                        () -> new EntityNotFoundException("Error adding customer with id "
+                                + custcode
+                                + " to order: customer not found.")
+                )
+        );
+
         return ordersRepository.save(order);
     }
 
