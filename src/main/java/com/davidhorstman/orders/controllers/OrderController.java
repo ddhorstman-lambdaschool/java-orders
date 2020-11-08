@@ -42,7 +42,11 @@ public class OrderController {
     // A value of "/" would require /orders/, but we want to allow for /orders
     @PostMapping(value = "", consumes = "application/json")
     public ResponseEntity<?> createNewOrder(@Valid @RequestBody Order order) {
+        // This value of 0 indicates that we're saving a new record rather than replacing and old one
+        order.setOrdnum(0);
         Order newOrder = orderServices.save(order);
+
+        // Redirect to the newly-created Order
         HttpHeaders responseHeaders = new HttpHeaders();
         URI newOrderURI = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -50,5 +54,20 @@ public class OrderController {
                 .toUri();
         responseHeaders.setLocation(newOrderURI);
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
+    }
+
+    @PutMapping(value="/{orderid}", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<?> replaceOrder(@PathVariable long orderid, @Valid @RequestBody Order order){
+        // Add the existing order ID to the new record which will replace it
+        order.setOrdnum(orderid);
+        Order newOrder = orderServices.save(order);
+
+        // Redirect to the replaced Order
+        HttpHeaders responseHeaders = new HttpHeaders();
+        URI newOrderURI = ServletUriComponentsBuilder.fromCurrentRequest()
+                .buildAndExpand()
+                .toUri();
+        responseHeaders.setLocation(newOrderURI);
+        return new ResponseEntity<>(null, responseHeaders, HttpStatus.OK);
     }
 }

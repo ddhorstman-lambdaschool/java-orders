@@ -29,6 +29,16 @@ public class OrderServicesImpl implements OrderServices {
     @Transactional
     public Order save(Order order) {
         Order newOrder = new Order();
+
+        // To update an existing order with a PUT request
+        long ordnum;
+        if ((ordnum = order.getOrdnum()) != 0) {
+            ordersRepository.findById(ordnum).orElseThrow(
+                    () -> new EntityNotFoundException("Could not update order number " + ordnum + ": order not found.")
+            );
+            newOrder.setOrdnum(ordnum);
+        }
+
         newOrder.setAdvanceamount(order.getAdvanceamount());
         newOrder.setOrdamount(order.getOrdamount());
         newOrder.setOrderdescription(order.getOrderdescription());
@@ -45,7 +55,7 @@ public class OrderServicesImpl implements OrderServices {
         }
 
         Customer c = order.getCustomer();
-        if(c == null){
+        if (c == null) {
             throw new EntityNotFoundException("A customer is required to add the order.");
         }
         Long custcode = c.getCustcode();
