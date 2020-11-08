@@ -17,4 +17,6 @@ public interface CustomerServices {
     List<CustomerOrderCount> findAllByOrderCount();
 
     void delete(long custcode);
+
+    Customer update(Customer updatedCustomer, long customerid);
 }

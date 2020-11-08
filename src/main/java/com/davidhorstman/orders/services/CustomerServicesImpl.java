@@ -26,6 +26,37 @@ public class CustomerServicesImpl implements CustomerServices {
     OrderServices orderServices;
 
     @Override
+    public List<Customer> findAll() {
+        List<Customer> list = new ArrayList<>();
+        customersRepository.findAll().iterator().forEachRemaining(list::add);
+        return list;
+    }
+
+    @Override
+    public Customer findById(long custcode) {
+        return customersRepository.findById(custcode).orElseThrow(() ->
+                new EntityNotFoundException("Customer with id " + custcode + " not found."));
+    }
+
+    @Override
+    public List<Customer> findByName(String name) {
+        return customersRepository.findAllByCustnameContainsIgnoreCase(name);
+    }
+
+    @Override
+    public List<CustomerOrderCount> findAllByOrderCount() {
+        return customersRepository.findAllByOrderCount();
+    }
+
+    @Override
+    @Transactional
+    public void delete(long custcode) {
+        // Confirm ID exists - if not this method will throw an exception
+        findById(custcode);
+        customersRepository.deleteById(custcode);
+    }
+
+    @Override
     @Transactional
     public Customer save(Customer customer) {
         Customer newCustomer = new Customer();
@@ -67,7 +98,7 @@ public class CustomerServicesImpl implements CustomerServices {
         // We need to create the customer before we can create their orders
         newCustomer = customersRepository.save(newCustomer);
 
-        for(Order o: customer.getOrders()){
+        for (Order o : customer.getOrders()) {
             o.setCustomer(newCustomer);
             orderServices.save(o);
         }
@@ -76,33 +107,12 @@ public class CustomerServicesImpl implements CustomerServices {
     }
 
     @Override
-    public List<Customer> findAll() {
-        List<Customer> list = new ArrayList<>();
-        customersRepository.findAll().iterator().forEachRemaining(list::add);
-        return list;
-    }
-
-    @Override
-    public Customer findById(long custcode) {
-        return customersRepository.findById(custcode).orElseThrow(() ->
-                new EntityNotFoundException("Customer with id " + custcode + " not found."));
-    }
-
-    @Override
-    public List<Customer> findByName(String name) {
-        return customersRepository.findAllByCustnameContainsIgnoreCase(name);
-    }
-
-    @Override
-    public List<CustomerOrderCount> findAllByOrderCount() {
-        return customersRepository.findAllByOrderCount();
-    }
-
-    @Override
     @Transactional
-    public void delete(long custcode) {
-        // Confirm ID exists - if not this method will throw an exception
-        findById(custcode);
-        customersRepository.deleteById(custcode);
+    public Customer update(Customer updatedCustomer, long customerid) {
+        Customer currentCustomer = customersRepository.findById(customerid).orElseThrow(
+                ()-> new EntityNotFoundException("Could not update customer with id "+customerid+": customer not found.")
+        );
+
+        return customersRepository.save(currentCustomer);
     }
 }

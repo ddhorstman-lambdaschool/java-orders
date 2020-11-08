@@ -77,4 +77,12 @@ public class CustomerController {
         responseHeaders.setLocation(newOrderURI);
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.OK);
     }
+
+    @PatchMapping(value = "/{customerid}", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<?> updateCustomer(
+            @RequestBody Customer customer,
+            @PathVariable long customerid) {
+        Customer updatedCustomer = customerServices.update(customer, customerid);
+        return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
+    }
 }
