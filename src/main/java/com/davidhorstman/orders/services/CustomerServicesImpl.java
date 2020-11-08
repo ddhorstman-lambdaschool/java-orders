@@ -42,4 +42,10 @@ public class CustomerServicesImpl implements CustomerServices {
     public List<CustomerOrderCount> findAllByOrderCount() {
         return customersRepository.findAllByOrderCount();
     }
+
+    @Override
+    public void delete(long custcode) {
+        findById(custcode);
+        customersRepository.deleteById(custcode);
+    }
 }

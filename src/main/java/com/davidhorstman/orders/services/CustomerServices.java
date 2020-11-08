@@ -15,4 +15,6 @@ public interface CustomerServices {
     List<Customer> findByName(String name);
 
     List<CustomerOrderCount> findAllByOrderCount();
+
+    void delete(long custcode);
 }
