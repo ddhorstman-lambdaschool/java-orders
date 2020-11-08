@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class OrderServicesImpl implements OrderServices {
     OrdersRepository ordersRepository;
 
     @Override
+    @Transactional
     public Order save(Order order) {
         return ordersRepository.save(order);
     }
@@ -35,6 +37,14 @@ public class OrderServicesImpl implements OrderServices {
     @Override
     public List<Order> findWithAdvanceAmount() {
         return ordersRepository.findByAdvanceamountGreaterThan(0.0);
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(long orderid) {
+        // Confirm ID exists - if not this method will throw an exception
+        findById(orderid);
+        ordersRepository.deleteById(orderid);
     }
 
 }
